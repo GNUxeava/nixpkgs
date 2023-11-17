@@ -7,23 +7,18 @@
 , darwin
 }:
 
-rustPlatform.buildRustPackage {
+rustPlatform.buildRustPackage rec {
   pname = "cargo-component";
-  version = "unstable-2023-08-03";
+  version = "0.4.0";
 
   src = fetchFromGitHub {
     owner = "bytecodealliance";
     repo = "cargo-component";
-    rev = "d14cef65719d0d186218d1dfe5f04bbbf295dc80";
-    hash = "sha256-dFaboXF5NXPE2xcJWanyP5WYpqJBq+xKpi6snNfIWJg=";
+    rev = "v${version}";
+    hash = "sha256-XJKychPpBYMzFlW9jUPaBWuNAlcbqUQwxy+cMW2Ivyg=";
   };
 
-  cargoLock = {
-    lockFile = ./Cargo.lock;
-    outputHashes = {
-      "warg-api-0.1.0" = "sha256-A5FQ/nbuzV8ockV6vOMKUEoJKeaId3oyZU1QeNpd1Zc=";
-    };
-  };
+  cargoHash = "sha256-cEmbXitYGztfBS5M9uczgmFPKRktP4skFETx8SJah2A=";
 
   nativeBuildInputs = [
     pkg-config
@@ -32,7 +27,7 @@ rustPlatform.buildRustPackage {
   buildInputs = [
     openssl
   ] ++ lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.Security
+    darwin.apple_sdk.frameworks.SystemConfiguration
   ];
 
   # requires the wasm32-wasi target
@@ -41,7 +36,9 @@ rustPlatform.buildRustPackage {
   meta = with lib; {
     description = "A Cargo subcommand for creating WebAssembly components based on the component model proposal";
     homepage = "https://github.com/bytecodealliance/cargo-component";
+    changelog = "https://github.com/bytecodealliance/cargo-component/releases/tag/${src.rev}";
     license = licenses.asl20;
     maintainers = with maintainers; [ figsoda ];
+    mainProgram = "cargo-component";
   };
 }

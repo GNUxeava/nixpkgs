@@ -5,6 +5,7 @@
 
 # build
 , setuptools
+, wheel
 
 # propagates
 , aiohttp
@@ -27,7 +28,7 @@
 
 buildPythonPackage rec {
   pname = "python-matter-server";
-  version = "3.7.0";
+  version = "4.0.1";
   format = "pyproject";
 
   disabled = pythonOlder "3.10";
@@ -36,11 +37,12 @@ buildPythonPackage rec {
     owner = "home-assistant-libs";
     repo = "python-matter-server";
     rev = "refs/tags/${version}";
-    hash = "sha256-t++7jQreibGpJRjJawicxjFIye5X6R1dpFqiM6yvRf0=";
+    hash = "sha256-zCw5sj+UgY0egjXGzcbOb7VATeLY80+8Mv9owmdA+f0=";
   };
 
   nativeBuildInputs = [
     setuptools
+    wheel
   ];
 
   propagatedBuildInputs = [

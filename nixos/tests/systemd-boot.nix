@@ -18,7 +18,7 @@ in
 {
   basic = makeTest {
     name = "systemd-boot";
-    meta.maintainers = with pkgs.lib.maintainers; [ danielfullmer ];
+    meta.maintainers = with pkgs.lib.maintainers; [ danielfullmer julienmalka ];
 
     nodes.machine = common;
 
@@ -42,7 +42,7 @@ in
   # Check that specialisations create corresponding boot entries.
   specialisation = makeTest {
     name = "systemd-boot-specialisation";
-    meta.maintainers = with pkgs.lib.maintainers; [ lukegb ];
+    meta.maintainers = with pkgs.lib.maintainers; [ lukegb julienmalka ];
 
     nodes.machine = { pkgs, lib, ... }: {
       imports = [ common ];
@@ -65,7 +65,7 @@ in
   # Boot without having created an EFI entry--instead using default "/EFI/BOOT/BOOTX64.EFI"
   fallback = makeTest {
     name = "systemd-boot-fallback";
-    meta.maintainers = with pkgs.lib.maintainers; [ danielfullmer ];
+    meta.maintainers = with pkgs.lib.maintainers; [ danielfullmer julienmalka ];
 
     nodes.machine = { pkgs, lib, ... }: {
       imports = [ common ];
@@ -91,7 +91,7 @@ in
 
   update = makeTest {
     name = "systemd-boot-update";
-    meta.maintainers = with pkgs.lib.maintainers; [ danielfullmer ];
+    meta.maintainers = with pkgs.lib.maintainers; [ danielfullmer julienmalka ];
 
     nodes.machine = common;
 
@@ -107,31 +107,28 @@ in
       )
 
       output = machine.succeed("/run/current-system/bin/switch-to-configuration boot")
-      assert "updating systemd-boot from 000.0-1-notnixos to " in output
+      assert "updating systemd-boot from 000.0-1-notnixos to " in output, "Couldn't find systemd-boot update message"
     '';
   };
 
   memtest86 = makeTest {
     name = "systemd-boot-memtest86";
-    meta.maintainers = with pkgs.lib.maintainers; [ Enzime ];
+    meta.maintainers = with pkgs.lib.maintainers; [ Enzime julienmalka ];
 
     nodes.machine = { pkgs, lib, ... }: {
       imports = [ common ];
       boot.loader.systemd-boot.memtest86.enable = true;
-      nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-        "memtest86-efi"
-      ];
     };
 
     testScript = ''
       machine.succeed("test -e /boot/loader/entries/memtest86.conf")
-      machine.succeed("test -e /boot/efi/memtest86/BOOTX64.efi")
+      machine.succeed("test -e /boot/efi/memtest86/memtest.efi")
     '';
   };
 
   netbootxyz = makeTest {
     name = "systemd-boot-netbootxyz";
-    meta.maintainers = with pkgs.lib.maintainers; [ Enzime ];
+    meta.maintainers = with pkgs.lib.maintainers; [ Enzime julienmalka ];
 
     nodes.machine = { pkgs, lib, ... }: {
       imports = [ common ];
@@ -146,27 +143,24 @@ in
 
   entryFilename = makeTest {
     name = "systemd-boot-entry-filename";
-    meta.maintainers = with pkgs.lib.maintainers; [ Enzime ];
+    meta.maintainers = with pkgs.lib.maintainers; [ Enzime julienmalka ];
 
     nodes.machine = { pkgs, lib, ... }: {
       imports = [ common ];
       boot.loader.systemd-boot.memtest86.enable = true;
       boot.loader.systemd-boot.memtest86.entryFilename = "apple.conf";
-      nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-        "memtest86-efi"
-      ];
     };
 
     testScript = ''
       machine.fail("test -e /boot/loader/entries/memtest86.conf")
       machine.succeed("test -e /boot/loader/entries/apple.conf")
-      machine.succeed("test -e /boot/efi/memtest86/BOOTX64.efi")
+      machine.succeed("test -e /boot/efi/memtest86/memtest.efi")
     '';
   };
 
   extraEntries = makeTest {
     name = "systemd-boot-extra-entries";
-    meta.maintainers = with pkgs.lib.maintainers; [ Enzime ];
+    meta.maintainers = with pkgs.lib.maintainers; [ Enzime julienmalka ];
 
     nodes.machine = { pkgs, lib, ... }: {
       imports = [ common ];
@@ -185,7 +179,7 @@ in
 
   extraFiles = makeTest {
     name = "systemd-boot-extra-files";
-    meta.maintainers = with pkgs.lib.maintainers; [ Enzime ];
+    meta.maintainers = with pkgs.lib.maintainers; [ Enzime julienmalka ];
 
     nodes.machine = { pkgs, lib, ... }: {
       imports = [ common ];
@@ -202,7 +196,7 @@ in
 
   switch-test = makeTest {
     name = "systemd-boot-switch-test";
-    meta.maintainers = with pkgs.lib.maintainers; [ Enzime ];
+    meta.maintainers = with pkgs.lib.maintainers; [ Enzime julienmalka ];
 
     nodes = {
       inherit common;
@@ -262,7 +256,7 @@ in
   # itself, systems with such firmware won't boot without this fix
   uefiLargeFileWorkaround = makeTest {
     name = "uefi-large-file-workaround";
-
+    meta.maintainers = with pkgs.lib.maintainers; [ julienmalka ];
     nodes.machine = { pkgs, ... }: {
       imports = [common];
       virtualisation.efi.OVMF = pkgs.OVMF.overrideAttrs (old: {

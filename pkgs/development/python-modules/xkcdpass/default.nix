@@ -9,14 +9,14 @@
 
 buildPythonPackage rec {
   pname = "xkcdpass";
-  version = "1.19.3";
+  version = "1.19.5";
   format = "setuptools";
 
   disabled = pythonOlder "3.7";
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-xaLpSHRtpv5QToQEKE9FfY6Y2m31BHxrs/cbGIgunSo=";
+    hash = "sha256-zEgC3tTQ6kwDovHPHRTvYndWVF79DpnAX454VDZiedE=";
   };
 
   nativeBuildInputs = [

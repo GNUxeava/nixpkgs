@@ -6,6 +6,7 @@
 , git
 , fetchFromGitHub
 , ninja
+, gitUpdater
 }:
 
 let
@@ -13,12 +14,12 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "circt";
-  version = "1.50.0";
+  version = "1.58.0";
   src = fetchFromGitHub {
     owner = "llvm";
     repo = "circt";
     rev = "firtool-${version}";
-    sha256 = "sha256-fZlJw+2kj8ZTt2Yb15yKD9koZPUfnalDchG29PgJTVs=";
+    sha256 = "sha256-WX3eZl9/N8K4VzBOLHZrxwEI7V+AxOnSA0XYKFHlqcE=";
     fetchSubmodules = true;
   };
 
@@ -69,11 +70,15 @@ stdenv.mkDerivation rec {
   doCheck = true;
   checkTarget = "check-circt check-circt-integration";
 
+  passthru.updateScript = gitUpdater {
+    rev-prefix = "firtool-";
+  };
+
   meta = {
     description = "Circuit IR compilers and tools";
     homepage = "https://circt.org/";
     license = lib.licenses.asl20;
-    maintainers = with lib.maintainers; [ sharzy ];
+    maintainers = with lib.maintainers; [ sharzy pineapplehunter ];
     platforms = lib.platforms.all;
   };
 }
