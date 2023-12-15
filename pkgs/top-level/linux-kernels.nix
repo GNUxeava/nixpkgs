@@ -166,7 +166,6 @@ in {
         kernelPatches.bridge_stp_helper
         kernelPatches.request_key_helper
         kernelPatches.export-rt-sched-migrate
-        kernelPatches.dell_xps_regression
       ];
     };
 
@@ -201,6 +200,7 @@ in {
        then latest
        else testing;
 
+    # FIXME: Remove after 23.11 is released
     linux_testing_bcachefs = callPackage ../os-specific/linux/kernel/linux-testing-bcachefs.nix {
       # Pinned on the last version which Kent's commits can be cleany rebased up.
       kernel = linux_6_5;
@@ -255,6 +255,7 @@ in {
     linux_5_15_hardened = hardenedKernelFor kernels.linux_5_15 { };
     linux_6_1_hardened = hardenedKernelFor kernels.linux_6_1 { };
     linux_6_5_hardened = hardenedKernelFor kernels.linux_6_5 { };
+    linux_6_6_hardened = hardenedKernelFor kernels.linux_6_6 { };
 
   } // lib.optionalAttrs config.allowAliases {
     linux_4_9 = throw "linux 4.9 was removed because it will reach its end of life within 22.11";
@@ -342,6 +343,8 @@ in {
     evdi = callPackage ../os-specific/linux/evdi { };
 
     fanout = callPackage ../os-specific/linux/fanout { };
+
+    framework-laptop-kmod = callPackage ../os-specific/linux/framework-laptop-kmod { };
 
     fwts-efi-runtime = callPackage ../os-specific/linux/fwts/module.nix { };
 
@@ -545,6 +548,10 @@ in {
 
     zenpower = callPackage ../os-specific/linux/zenpower { };
 
+    zfs_2_1 = callPackage ../os-specific/linux/zfs/2_1.nix {
+      configFile = "kernel";
+      inherit pkgs kernel;
+    };
     zfsStable = callPackage ../os-specific/linux/zfs/stable.nix {
       configFile = "kernel";
       inherit pkgs kernel;
@@ -612,6 +619,7 @@ in {
 
     # Intentionally lacks recurseIntoAttrs, as -rc kernels will quite likely break out-of-tree modules and cause failed Hydra builds.
     linux_testing = packagesFor kernels.linux_testing;
+    # FIXME: Remove after 23.11 is released
     linux_testing_bcachefs = recurseIntoAttrs (packagesFor kernels.linux_testing_bcachefs);
 
     linux_hardened = recurseIntoAttrs (packagesFor kernels.linux_hardened);
@@ -622,6 +630,7 @@ in {
     linux_5_15_hardened = recurseIntoAttrs (packagesFor kernels.linux_5_15_hardened);
     linux_6_1_hardened = recurseIntoAttrs (packagesFor kernels.linux_6_1_hardened);
     linux_6_5_hardened = recurseIntoAttrs (packagesFor kernels.linux_6_5_hardened);
+    linux_6_6_hardened = recurseIntoAttrs (packagesFor kernels.linux_6_6_hardened);
 
     linux_zen = recurseIntoAttrs (packagesFor kernels.linux_zen);
     linux_lqx = recurseIntoAttrs (packagesFor kernels.linux_lqx);

@@ -9,11 +9,11 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "libaom";
-  version = "3.7.0";
+  version = "3.7.1";
 
   src = fetchzip {
     url = "https://aomedia.googlesource.com/aom/+archive/v${version}.tar.gz";
-    hash = "sha256-Zf0g/CMI73O9Dkn9o7aIvwZ/8wh3lCmVY8nZaPwBp68=";
+    hash = "sha256-v2SBiDE4zZe3LMrlo/tP9GzmG/PJZ42rKi1svKJR6ZA=";
     stripRoot = false;
   };
 
@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
     # CPU detection isn't supported on Darwin and breaks the aarch64-darwin build:
     "-DCONFIG_RUNTIME_CPU_DETECT=0"
   ] ++ lib.optionals (isCross && !stdenv.hostPlatform.isx86) [
-    "-DAS_EXECUTABLE=${stdenv.cc.targetPrefix}as"
+    "-DCMAKE_ASM_COMPILER=${stdenv.cc.targetPrefix}as"
   ] ++ lib.optionals stdenv.isAarch32 [
     # armv7l-hf-multiplatform does not support NEON
     # see lib/systems/platform.nix

@@ -12,14 +12,13 @@
 }:
 
 let
-
-  version = "1.10.0";
+  version = "1.11.0";
 
   src = fetchFromGitHub {
     owner = "axllent";
     repo = "mailpit";
     rev = "v${version}";
-    hash = "sha256-MrhTgyY89rU2EQILRSFJk8U7QWaoUf2p83ksFjA7xOM=";
+    hash = "sha256-+PtyoItn9Dwf7HU3OjzldqfYgdu0LatPmijXK3gAKYY=";
   };
 
   # Separate derivation, because if we mix this in buildGoModule, the separate
@@ -31,7 +30,13 @@ let
 
     npmDeps = fetchNpmDeps {
       inherit src;
-      hash = "sha256-r4yv2qImIlNMPJagz5i1sxqBDnFAucc2kDUmjGktM6A=";
+      hash = "sha256-zx6B6kDVdKJMQQPONC/KWRXK2i+4l5w9hzrAqatrKTE=";
+    };
+
+    env = lib.optionalAttrs (stdenv.isDarwin && stdenv.isx86_64) {
+      # Make sure libc++ uses `posix_memalign` instead of `aligned_alloc` on x86_64-darwin.
+      # Otherwise, nodejs would require the 11.0 SDK and macOS 10.15+.
+      NIX_CFLAGS_COMPILE = "-D__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__=101300";
     };
 
     nativeBuildInputs = [ nodejs python3 libtool npmHooks.npmConfigHook ];
@@ -51,7 +56,7 @@ buildGoModule {
   pname = "mailpit";
   inherit src version;
 
-  vendorHash = "sha256-TXa97oOul9cf07uNGdIoxIM++da5HBFeoh05LaJzQTA=";
+  vendorHash = "sha256-UQms3YWXJRP1u1ERlsFNpo6ei86qaH6pgfvCLnB3AAk=";
 
   CGO_ENABLED = 0;
 
@@ -62,7 +67,6 @@ buildGoModule {
   '';
 
   passthru.tests.version = testers.testVersion {
-    inherit version;
     package = mailpit;
     command = "mailpit version";
   };

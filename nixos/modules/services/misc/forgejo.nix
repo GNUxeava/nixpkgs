@@ -21,7 +21,7 @@ let
     mkIf
     mkMerge
     mkOption
-    mkPackageOptionMD
+    mkPackageOption
     mkRemovedOptionModule
     mkRenamedOptionModule
     optionalAttrs
@@ -57,7 +57,7 @@ in
     services.forgejo = {
       enable = mkEnableOption (mdDoc "Forgejo");
 
-      package = mkPackageOptionMD pkgs "forgejo" { };
+      package = mkPackageOption pkgs "forgejo" { };
 
       useWizard = mkOption {
         default = false;
@@ -435,17 +435,6 @@ in
         }
       ];
     };
-
-    # Work around 'pq: permission denied for schema public' with postgres v15, until a
-    # solution for `services.postgresql.ensureUsers` is found.
-    # See https://github.com/NixOS/nixpkgs/issues/216989
-    systemd.services.postgresql.postStart = lib.mkIf (
-      usePostgresql
-      && cfg.database.createDatabase
-      && lib.strings.versionAtLeast config.services.postgresql.package.version "15.0"
-    ) (lib.mkAfter ''
-      $PSQL -tAc 'ALTER DATABASE "${cfg.database.name}" OWNER TO "${cfg.database.user}";'
-    '');
 
     services.mysql = optionalAttrs (useMysql && cfg.database.createDatabase) {
       enable = mkDefault true;
