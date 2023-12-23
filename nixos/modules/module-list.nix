@@ -278,6 +278,7 @@
   ./programs/wayland/waybar.nix
   ./programs/wayland/wayfire.nix
   ./programs/weylus.nix
+  ./programs/winbox.nix
   ./programs/wireshark.nix
   ./programs/xastir.nix
   ./programs/wshowkeys.nix
@@ -769,6 +770,7 @@
   ./services/misc/tautulli.nix
   ./services/misc/tiddlywiki.nix
   ./services/misc/tp-auto-kbbl.nix
+  ./services/misc/tuxclocker.nix
   ./services/misc/tzupdate.nix
   ./services/misc/uhub.nix
   ./services/misc/weechat.nix
@@ -1257,6 +1259,7 @@
   ./services/web-apps/changedetection-io.nix
   ./services/web-apps/chatgpt-retrieval-plugin.nix
   ./services/web-apps/cloudlog.nix
+  ./services/web-apps/code-server.nix
   ./services/web-apps/convos.nix
   ./services/web-apps/dex.nix
   ./services/web-apps/discourse.nix
