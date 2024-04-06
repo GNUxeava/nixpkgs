@@ -8,10 +8,9 @@ let
 in
 buildNodejs {
   inherit enableNpm;
-  version = "21.4.0";
-  sha256 = "17274m7w6wxhfwwshc0nj34682pqqkpjxgn5b1rjsq2lfr9gd03s";
+  version = "21.7.2";
+  sha256 = "sha256-tLHioH6W+F9s40ovv+o0hpGu/lyyGappUeI8zJkfni8=";
   patches = [
-    ./revert-arm64-pointer-auth.patch
     ./disable-darwin-v8-system-instrumentation-node19.patch
     ./bypass-darwin-xcrun-node16.patch
     ./node-npm-build-npm-package-logic.patch

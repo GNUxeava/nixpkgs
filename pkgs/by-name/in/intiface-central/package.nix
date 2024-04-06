@@ -22,13 +22,12 @@ flutter.buildFlutterApplication rec {
     ./corrosion.patch
   ];
 
-  depsListFile = ./deps.json;
-  vendorHash = "sha256-06I9ugwUmMT16A6l5Is5v35Fu7pyE8+1mnDDPKxCYxM=";
+  pubspecLock = lib.importJSON ./pubspec.lock.json;
 
   cargoDeps = rustPlatform.fetchCargoTarball {
     name = "${pname}-${version}-cargo-deps";
     inherit src;
-    sourceRoot = "source/intiface-engine-flutter-bridge";
+    sourceRoot = "${src.name}/intiface-engine-flutter-bridge";
     hash = "sha256-0sCHa3rMaLYaUG3E3fmsLi0dSdb9vGyv7qNR3JQkXuU=";
   };
   cargoRoot = "intiface-engine-flutter-bridge";

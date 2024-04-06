@@ -7,12 +7,13 @@
 , ciso8601
 , cryptography
 , fetchFromGitHub
-, fetchpatch
 , pycognito
+, pyjwt
 , pytest-aiohttp
 , pytest-timeout
 , pytestCheckHook
 , pythonOlder
+, pythonRelaxDepsHook
 , setuptools
 , snitun
 , syrupy
@@ -21,28 +22,25 @@
 
 buildPythonPackage rec {
   pname = "hass-nabucasa";
-  version = "0.74.0";
+  version = "0.79.0";
   pyproject = true;
 
-  disabled = pythonOlder "3.10";
+  disabled = pythonOlder "3.11";
 
   src = fetchFromGitHub {
     owner = "nabucasa";
-    repo = pname;
+    repo = "hass-nabucasa";
     rev = "refs/tags/${version}";
-    hash = "sha256-r4Huvn9mBqnASpUd+drwORE+fApLV/l6Y3aO/UIiEC8=";
+    hash = "sha256-7VhafefF7imvnhdFo6K+18h5kmXvIatKerJ+Qn5zwdQ=";
   };
-
-  patches = [
-    (fetchpatch {
-      # Add missing wait_for_close mock in AiohttpClientMockResponse
-      url = "https://github.com/NabuCasa/hass-nabucasa/commit/097607e0fe30932ca5cba0c50fda125f90f5f3de.patch";
-      hash = "sha256-ZSh+1kGBb6ltNnd0RaDECXiJDEGJBOw1wN2HXPgfy+o=";
-    })
-  ];
 
   nativeBuildInputs = [
     setuptools
+    pythonRelaxDepsHook
+  ];
+
+  pythonRelaxDeps = [
+    "acme"
   ];
 
   propagatedBuildInputs = [
@@ -53,6 +51,7 @@ buildPythonPackage rec {
     ciso8601
     cryptography
     pycognito
+    pyjwt
     snitun
   ];
 

@@ -11,24 +11,24 @@
 
 buildPythonPackage rec {
   pname = "velbus-aio";
-  version = "2023.11.0";
+  version = "2024.4.0";
   pyproject = true;
 
   disabled = pythonOlder "3.7";
 
   src = fetchFromGitHub {
     owner = "Cereal2nd";
-    repo = pname;
+    repo = "velbus-aio";
     rev = "refs/tags/${version}";
-    hash = "sha256-j0NGeuxhtxmlpal9MpnlHqGv47uTVx1Lyfy9u0cEtYg=";
+    hash = "sha256-wYcASRmUxVdUpfKlNIteQlHw3ZaYxZ7VenKtaju1yTE=";
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs = [
+  build-system = [
     setuptools
   ];
 
-  propagatedBuildInputs = [
+  dependencies = [
     backoff
     pyserial
     pyserial-asyncio

@@ -9,7 +9,6 @@ with lib;
 let
   cfg = config.services.kea;
 
-  xor = x: y: (!x && y) || (x && !y);
   format = pkgs.formats.json {};
 
   chooseNotNull = x: y: if x != null then x else y;
@@ -254,6 +253,8 @@ in
       DynamicUser = true;
       User = "kea";
       ConfigurationDirectory = "kea";
+      RuntimeDirectory = "kea";
+      RuntimeDirectoryPreserve = true;
       StateDirectory = "kea";
       UMask = "0077";
     };
@@ -288,8 +289,8 @@ in
       ];
 
       environment = {
-        KEA_PIDFILE_DIR = "/run/kea-ctrl-agent";
-        KEA_LOCKFILE_DIR = "/run/kea-ctrl-agent";
+        KEA_PIDFILE_DIR = "/run/kea";
+        KEA_LOCKFILE_DIR = "/run/kea";
       };
 
       restartTriggers = [
@@ -300,7 +301,6 @@ in
         ExecStart = "${package}/bin/kea-ctrl-agent -c /etc/kea/ctrl-agent.conf ${lib.escapeShellArgs cfg.ctrl-agent.extraArgs}";
         KillMode = "process";
         Restart = "on-failure";
-        RuntimeDirectory = "kea-ctrl-agent";
       } // commonServiceConfig;
     };
   })
@@ -324,13 +324,16 @@ in
         "network-online.target"
         "time-sync.target"
       ];
+      wants = [
+        "network-online.target"
+      ];
       wantedBy = [
         "multi-user.target"
       ];
 
       environment = {
-        KEA_PIDFILE_DIR = "/run/kea-dhcp4";
-        KEA_LOCKFILE_DIR = "/run/kea-dhcp4";
+        KEA_PIDFILE_DIR = "/run/kea";
+        KEA_LOCKFILE_DIR = "/run/kea";
       };
 
       restartTriggers = [
@@ -348,7 +351,6 @@ in
           "CAP_NET_BIND_SERVICE"
           "CAP_NET_RAW"
         ];
-        RuntimeDirectory = "kea-dhcp4";
       } // commonServiceConfig;
     };
   })
@@ -372,13 +374,16 @@ in
         "network-online.target"
         "time-sync.target"
       ];
+      wants = [
+        "network-online.target"
+      ];
       wantedBy = [
         "multi-user.target"
       ];
 
       environment = {
-        KEA_PIDFILE_DIR = "/run/kea-dhcp6";
-        KEA_LOCKFILE_DIR = "/run/kea-dhcp6";
+        KEA_PIDFILE_DIR = "/run/kea";
+        KEA_LOCKFILE_DIR = "/run/kea";
       };
 
       restartTriggers = [
@@ -394,7 +399,6 @@ in
         CapabilityBoundingSet = [
           "CAP_NET_BIND_SERVICE"
         ];
-        RuntimeDirectory = "kea-dhcp6";
       } // commonServiceConfig;
     };
   })
@@ -414,6 +418,7 @@ in
         "https://kea.readthedocs.io/en/kea-${package.version}/arm/ddns.html"
       ];
 
+      wants = [ "network-online.target" ];
       after = [
         "network-online.target"
         "time-sync.target"
@@ -423,8 +428,8 @@ in
       ];
 
       environment = {
-        KEA_PIDFILE_DIR = "/run/kea-dhcp-ddns";
-        KEA_LOCKFILE_DIR = "/run/kea-dhcp-ddns";
+        KEA_PIDFILE_DIR = "/run/kea";
+        KEA_LOCKFILE_DIR = "/run/kea";
       };
 
       restartTriggers = [
@@ -439,7 +444,6 @@ in
         CapabilityBoundingSet = [
           "CAP_NET_BIND_SERVICE"
         ];
-        RuntimeDirectory = "kea-dhcp-ddns";
       } // commonServiceConfig;
     };
   })

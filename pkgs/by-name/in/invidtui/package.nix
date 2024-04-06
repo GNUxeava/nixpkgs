@@ -2,16 +2,16 @@
 
 buildGoModule rec {
   pname = "invidtui";
-  version = "0.3.6";
+  version = "0.4.4";
 
   src = fetchFromGitHub {
     owner = "darkhz";
     repo = "invidtui";
     rev = "refs/tags/v${version}";
-    hash = "sha256-zUr0zrIJPpqhHvL7PFFN7cgcgBXV+WHO/eRes7+HzxM=";
+    hash = "sha256-nNJ2bjrHRIzcPs+jbZpgaHBxSWRzSRIsT6xx9EsbISg=";
   };
 
-  vendorHash = "sha256-cKvY3/3N3SESBVol7Af3M3mJaPwxLzd/rKN8P+qh7sY=";
+  vendorHash = "sha256-C7O2GJuEdO8geRPfHx1Sq6ZveDE/u65JBx/Egh3cnK4=";
 
   doCheck = true;
 

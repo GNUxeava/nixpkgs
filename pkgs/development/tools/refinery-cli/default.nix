@@ -2,15 +2,15 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "refinery-cli";
-  version = "0.8.11";
+  version = "0.8.13";
 
   src = fetchCrate {
     pname = "refinery_cli";
     inherit version;
-    sha256 = "sha256-Dx0xcPQsq5fYrjgCrEjXyQJOpjEF9d1vavTo+LUKSyE=";
+    sha256 = "sha256-5PncxxJ63WGwJk4MexqOJZQEhdoe4WMz8gsHZgjxBPM=";
   };
 
-  cargoHash = "sha256-giD9yBbC3Fsgtch6lkMLGkYik/hivK48Um2qWI7EV+A=";
+  cargoHash = "sha256-C0/11Ky5mXcEFPxa72jkJLg/DDxPz/Jmmfa2oHpHF6k=";
 
   nativeBuildInputs = [ pkg-config ];
 
@@ -19,6 +19,7 @@ rustPlatform.buildRustPackage rec {
 
   meta = with lib; {
     description = "Run migrations for the Refinery ORM for Rust via the CLI";
+    mainProgram = "refinery";
     homepage = "https://github.com/rust-db/refinery";
     changelog = "https://github.com/rust-db/refinery/blob/${version}/CHANGELOG.md";
     license = licenses.mit;

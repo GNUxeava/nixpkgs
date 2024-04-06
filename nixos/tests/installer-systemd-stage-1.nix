@@ -22,6 +22,7 @@
     # lvm
     separateBoot
     separateBootFat
+    separateBootZfs
     simple
     simpleLabels
     simpleProvided
@@ -36,6 +37,7 @@
     clevisLuksFallback
     clevisZfs
     clevisZfsFallback
+    gptAutoRoot
     ;
 
 }

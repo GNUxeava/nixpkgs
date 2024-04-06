@@ -6,20 +6,20 @@
 
 buildGoModule rec {
   pname = "c2FmZQ";
-  version = "0.4.15";
+  version = "0.4.19";
 
   src = fetchFromGitHub {
     owner = "c2FmZQ";
     repo = "c2FmZQ";
     rev = "v${version}";
-    hash = "sha256-xQOzuJfGmnmOJqHCm5xUNuLHQO4UVRMu1vABsuUbv60=";
+    hash = "sha256-9kCiV+v7RNFDrAbWRujTW9b9sbYX9fGEE37S9uDp0nY=";
   };
 
   ldflags = [ "-s" "-w" ];
 
-  sourceRoot = "source/c2FmZQ";
+  sourceRoot = "${src.name}/c2FmZQ";
 
-  vendorHash = "sha256-aG1YPg8jeBJShICujUgrcvgAlb7ySdwjc+x6jEUYHXA=";
+  vendorHash = "sha256-plORJl7KNsBP3tQSYX8829+sb8l0sO/TS8Bt25JXNgY=";
 
   subPackages = [ "c2FmZQ-client" "c2FmZQ-server" ];
 

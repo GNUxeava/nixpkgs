@@ -2,13 +2,13 @@
 
 buildGoModule rec {
   pname = "git-town";
-  version = "10.0.1";
+  version = "13.0.1";
 
   src = fetchFromGitHub {
     owner = "git-town";
     repo = "git-town";
     rev = "v${version}";
-    hash = "sha256-b4NwimMHF5023I0NvfYMlYIJA9Tj6wPwfKDI4Fmo3lg=";
+    hash = "sha256-Ds3N5KUpB0HLRrKH/kpcBqtOtBD1fizYPsfKedBorTo=";
   };
 
   vendorHash = null;
@@ -56,7 +56,7 @@ buildGoModule rec {
   passthru.tests.version = testers.testVersion {
     package = git-town;
     command = "git-town --version";
-    version = "v${version}";
+    inherit version;
   };
 
   meta = with lib; {

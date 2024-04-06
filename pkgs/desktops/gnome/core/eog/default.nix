@@ -31,13 +31,13 @@
 
 stdenv.mkDerivation rec {
   pname = "eog";
-  version = "45.1";
+  version = "45.3";
 
   outputs = [ "out" "dev" "devdoc" ];
 
   src = fetchurl {
     url = "mirror://gnome/sources/${pname}/${lib.versions.major version}/${pname}-${version}.tar.xz";
-    sha256 = "sha256-wX+GcExyKzbAGhaPHlFDm+C7J58sZkb0i2bp0POiTNI=";
+    sha256 = "sha256-hlD2YtSSHYOnkE9rucokW69zX3F7R/rFs38NkOXokag=";
   };
 
   patches = [
@@ -119,5 +119,6 @@ stdenv.mkDerivation rec {
     license = licenses.gpl2Plus;
     maintainers = teams.gnome.members;
     platforms = platforms.unix;
+    mainProgram = "eog";
   };
 }
