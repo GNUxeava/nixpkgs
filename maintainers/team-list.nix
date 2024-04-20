@@ -146,6 +146,15 @@ with lib.maintainers; {
     enableFeatureFreezePing = true;
   };
 
+  cloudposse = {
+    members = [
+      dudymas
+    ];
+    scope = "Maintain atmos and applications made by the Cloud Posse team.";
+    shortName = "CloudPosse";
+    enableFeatureFreezePing = true;
+  };
+
   coq = {
     members = [
       cohencyril
@@ -351,6 +360,7 @@ with lib.maintainers; {
   geospatial = {
     members = [
       imincik
+      l0b0
       nh2
       nialov
       sikmir
@@ -441,6 +451,7 @@ with lib.maintainers; {
     # Verify additions to this team with at least one already existing member of the team.
     members = [
       das_j
+      conni2461
     ];
     scope = "Group registration for packages maintained by Helsinki Systems";
     shortName = "Helsinki Systems employees";
@@ -474,6 +485,7 @@ with lib.maintainers; {
       ryantm
       lassulus
       yayayayaka
+      asymmetric
     ];
     scope = "Maintain Jitsi.";
     shortName = "Jitsi";
@@ -506,6 +518,7 @@ with lib.maintainers; {
       cpages
       dschrempf
       edwtjo
+      kazenyuk
       minijackson
       peterhoeg
       sephalon
@@ -561,6 +574,9 @@ with lib.maintainers; {
       RossComputerGuy
       rrbutani
       sternenseemann
+    ];
+    githubTeams = [
+      "llvm"
     ];
     scope = "Maintain LLVM package sets and related packages";
     shortName = "LLVM";
