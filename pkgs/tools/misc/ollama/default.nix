@@ -32,7 +32,7 @@
     owner = "jmorganca";
     repo = "ollama";
     rev = "v${version}";
-    hash = "sha256-/WZ02SJiUnPqYMdXtqJEIJgm7T7PAmxWFjk1RLIfv2o=";
+    hash = "sha256-Emi53H6F8aqgOXD9QiA6a9MgnAa5G2oXT+Wlr61mv1g=";
     fetchSubmodules = true;
   };
   vendorHash = lib.fakeHash;
