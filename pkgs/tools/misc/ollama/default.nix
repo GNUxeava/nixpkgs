@@ -41,7 +41,7 @@
   # each update, these patches should be synchronized with the contents of `ollama/llm/patches/`
   llamacppPatches = [
     (preparePatch "03-load_exception.diff" "sha256-1DfNahFYYxqlx4E4pwMKQpL+XR0bibYnDFGt6dCL4TM=")
-    (preparePatch "04-locale.diff" "sha256-r5nHiP6yN/rQObRu2FZIPBKpKP9yByyZ6sSI2SKj6Do=")
+    #(preparePatch "04-locale.diff" "sha256-r5nHiP6yN/rQObRu2FZIPBKpKP9yByyZ6sSI2SKj6Do=")
   ];
 
   preparePatch = patch: hash:
